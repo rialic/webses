@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_tenants', function (Blueprint $table) {
-            $table->id('te_id');
-            $table->uuid('te_uuid');
-            $table->string('te_name', 150)->unique();
-            $table->string('te_subdomain')->unique();
-            $table->boolean('te_status')->default(true);
+            $table->id('tenant_id');
+            $table->uuid('tenant_uuid');
+            $table->string('tenant_name', 150)->unique();
+            $table->string('tenant_subdomain')->unique();
+            $table->boolean('tenant_status')->default(true);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

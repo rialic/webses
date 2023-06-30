@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\User;
+namespace App\Http\Resources\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class RegisterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,17 +14,11 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($request->method() === 'POST' || $request->method() === 'PUT') {
-            return [
-                'uuid' => $this->uuid,
-                'message' => 'Salvo com sucesso.'
-            ];
-        }
-
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
             'email' => $this->email,
+            'token' => $this->resource->createToken($request->device_name)->plainTextToken
         ];
     }
 }

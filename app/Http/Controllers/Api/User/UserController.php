@@ -4,36 +4,25 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
-use App\Models\User;
-use App\Http\Requests\User\StoreUpdateUser;
+use App\Service\User\UserService;
+use Illuminate\Http\Request;
+use App\Traits\HasResourceController;
 
 class UserController extends Controller
 {
-  private $model;
+  use HasResourceController;
 
-  public function __construct(User $user)
+  private $service;
+  private $resourceColection;
+
+  public function __construct(UserService $service)
   {
-    $this->model = $user;
+    $this->service = $service;
+    $this->resourceColection = UserResource::class;
   }
 
-  public function index()
+  public function me(Request $request)
   {
-    $users = User::get();
-    return UserResource::collection($users);
-  }
-
-  public function update(StoreUpdateUser $request, $identify)
-  {
-    $user = $this->model->where('us_uuid', $identify)->firstOrFail();
-
-    $data = $request->validated();
-
-    if ($request->password) {
-      $data['password'] = bcrypt($request->password);
-    }
-
-    $user->update($data);
-
-    return response()->json(['updated' => 'success']);
+    return new $this->resourceColection($request->user());
   }
 }

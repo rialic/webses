@@ -19,32 +19,30 @@ trait HasResourceModel
 
   public function syncFields(array $fields): array
   {
-    return collect($fields)->reduce(fn($acc, $field, $key) => $acc += ["{$this->getTableColumnPrefixAttribute()}_{$key}" => $field], []);
+    return collect($fields)->reduce(fn($acc, $field, $key) => $acc += ["{$this->getTableColumnPrefix()}_{$key}" => $field], []);
   }
 
-  public function __get($name)
+  public function __get($field)
   {
-    $propertyExits = (in_array($name, $this->appends) || in_array($name, $this->fillable));
+    $propertyExits = (in_array($field, $this->appends) || in_array($field, $this->fillable));
 
     if ($propertyExits) {
-      $method = 'get' . Str::studly($name) . 'Attribute';
+      $method = 'get' . Str::studly($field) . 'Attribute';
 
       if (method_exists($this, $method)) {
         return $this->{$method}();
       }
 
-      return  $this->getAttributes()[$name] ?? $this->getAttributes()["{$this->tableColumnPrefix}_{$name}"];
+      return  $this->getAttributes()[$field] ?? $this->getAttributes()["{$this->getTableColumnPrefix()}_{$field}"];
     }
-
-    return;
   }
 
-  public function getTableColumnPrefixAttribute()
+  public function getTableColumnPrefix()
   {
     return $this->tableColumnPrefix;
   }
 
-  public function getPrimaryKeyAttribute()
+  public function getPrimaryKey()
   {
     return $this->primaryKey;
   }

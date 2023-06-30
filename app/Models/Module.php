@@ -22,6 +22,6 @@ class Module extends Model
 
     public function tenants()
     {
-        return $this->belongsToMany(Tenant::class, 'tb_tenant_modules', 'mo_id', 'te_id');
+        return $this->belongsToMany(Tenant::class, 'tb_tenant_modules', 'mo_id', 'tenant_id');
     }
 }

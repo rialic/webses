@@ -12,8 +12,8 @@ class Tenant extends Model
     use HasFactory, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadOf HasUuids; }
 
     protected $table = 'tb_tenants';
-    protected $tableColumnPrefix = 'te';
-    protected $primaryKey = 'te_id';
+    protected $tableColumnPrefix = 'tenant';
+    protected $primaryKey = 'tenant_id';
 
     protected $appends = [
         'name',
@@ -22,18 +22,19 @@ class Tenant extends Model
     ];
 
     protected $fillable = [
-        'te_name',
-        'te_subdomain',
-        'te_status'
+        'tenant_name',
+        'tenant_subdomain',
+        'tenant_status'
     ];
 
+    // RELATIONSHIPS
     public function modules()
     {
-        return $this->belongsToMany(Module::class, 'tb_tenant_modules', 'te_id', 'mo_id');
+        return $this->belongsToMany(Module::class, 'tb_tenant_modules', 'tenant_id', 'mo_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'tb_tenant_modules', 'te_id', 'us_id');
+        return $this->belongsToMany(User::class, 'tb_tenant_modules', 'tenant_id', 'us_id');
     }
 }

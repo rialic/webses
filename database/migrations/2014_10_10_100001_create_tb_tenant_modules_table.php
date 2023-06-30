@@ -13,15 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_tenant_modules', function (Blueprint $table) {
-            $table->unsignedBigInteger('te_id');
+            $table->unsignedBigInteger('tenant_id');
             $table->unsignedBigInteger('mo_id');
             $table->boolean('tm_status')->default(true);
             $table->timestamps();
 
-            $table->foreign('te_id')->references('te_id')->on('tb_tenants')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('tenant_id')->on('tb_tenants')->onDelete('cascade');
             $table->foreign('mo_id')->references('mo_id')->on('tb_modules')->onDelete('cascade');
 
-            $table->primary(['te_id','mo_id']);
+            $table->primary(['tenant_id','mo_id']);
 
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';

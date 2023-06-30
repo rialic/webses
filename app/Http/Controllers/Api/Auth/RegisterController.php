@@ -3,27 +3,20 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\StoreUpdateUser;
-use App\Http\Resources\User\UserResource;
-
-use App\Models\User;
+use App\Http\Resources\Auth\RegisterResource;
+use App\Service\Auth\RegisterService;
+use App\Traits\HasResourceController;
 
 class RegisterController extends Controller
 {
-    private $model;
+    use HasResourceController;
 
-    public function __construct(User $user)
+    private $service;
+    private $resourceColection;
+
+    public function __construct(RegisterService $service)
     {
-        $this->model = $user;
-    }
-
-    public function store(StoreUpdateUser $request)
-    {
-        $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
-
-        $this->model->fill($this->model->syncFields($data))->save();
-
-        return (new UserResource($this->model))->additional(['token' => $this->model->createToken($request->device_name)->plainTextToken]);
+        $this->service = $service;
+        $this->resourceColection = RegisterResource::class;
     }
 }

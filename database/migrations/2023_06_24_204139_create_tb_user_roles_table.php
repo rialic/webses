@@ -15,13 +15,13 @@ return new class extends Migration
         Schema::create('tb_user_roles', function (Blueprint $table) {
             $table->unsignedBigInteger('ro_id');
             $table->unsignedBigInteger('us_id');
-            $table->unsignedBigInteger('te_id');
+            $table->unsignedBigInteger('tenant_id');
             $table->boolean('ur_status')->default(true);
             $table->timestamps();
 
             $table->foreign('ro_id')->references('ro_id')->on('tb_roles')->onDelete('cascade');
             $table->foreign('us_id')->references('us_id')->on('tb_users')->onDelete('cascade');
-            $table->foreign('te_id')->references('te_id')->on('tb_tenants')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('tenant_id')->on('tb_tenants')->onDelete('cascade');
 
             $table->primary(['ro_id', 'us_id']);
 

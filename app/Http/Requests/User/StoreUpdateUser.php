@@ -3,7 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class StoreUpdateUser extends FormRequest
 {
@@ -35,8 +35,8 @@ class StoreUpdateUser extends FormRequest
 
         $rules = [
             'name' => ['required', 'string', "regex:/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+\040[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\040,.'-]+$/", 'max:100'],
-            'cpf' => ['required', 'cpf', 'max:11', "unique:tb_user,us_cpf,{$uuid},us_uuid"],
-            'email' => ['required', 'email', 'max:255', "unique:tb_user,us_email,{$uuid},us_uuid"],
+            'cpf' => ['sometimes', 'cpf', 'max:11', "unique:tb_users,us_cpf,{$uuid},us_uuid"],
+            'email' => ['required', 'email', 'max:255', "unique:tb_users,us_email,{$uuid},us_uuid"],
             'password' => ['required', 'min:6', 'max:8'],
             'device_name' => ['required', 'string', 'max:200']
         ];
