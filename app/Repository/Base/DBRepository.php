@@ -20,6 +20,14 @@ class DBRepository implements DBRepositoryInterface
 
     public function getTableColumn($field)
     {
+        $isFieldInRelationship = in_array($field, $this->model->getRelationships());
+
+        if ($isFieldInRelationship) {
+            $model = $this->model->{$field};
+
+            return "{$model->getTableColumnPrefix()}_id";
+        }
+
         return "{$this->model->getTableColumnPrefix()}_{$field}";
     }
 

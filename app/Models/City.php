@@ -14,6 +14,7 @@ class City extends Model
     protected $table = 'tb_cities';
     protected $tableColumnPrefix = 'ci';
     protected $primaryKey = 'ci_id';
+    protected $relationships = ['state'];
 
     protected $appends = [
         'name',

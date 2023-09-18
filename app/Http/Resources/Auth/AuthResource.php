@@ -2,23 +2,25 @@
 
 namespace App\Http\Resources\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
-class AuthResource extends JsonResource
+class AuthResource implements LoginResponseContract
 {
     /**
-     * Transform the resource into an array.
+     * Create an HTTP response that represents the object.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function toArray(Request $request): array
+    public function toResponse($request)
     {
-        return [
-            'uuid' => $this->uuid,
-            'name' => $this->name,
-            'email' => $this->email,
-            'token' => $this->resource->createToken($request->device_name)->plainTextToken
-        ];
+        $user = auth()->user();
+
+        return response()->json([
+            'uuid' => $user->uuid,
+            'name' => $user->name,
+            'email' => $user->email,
+            'token' => $user->createToken($request->device_name)->plainTextToken
+        ]);
     }
 }

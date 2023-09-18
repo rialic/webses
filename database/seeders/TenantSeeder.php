@@ -14,9 +14,9 @@ class TenantSeeder extends Seeder
     {
         $tenant = app(Tenant::class);
 
-        $tenant::create([
-            'tenant_subdomain' => 'tsms',
-            'tenant_name' => 'Telessaúde MS'
+        $tenant::firstOrCreate([
+            'tenant_subdomain' => 'master',
+            'tenant_name' => 'Master'
         ]);
     }
 }

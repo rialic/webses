@@ -37,6 +37,7 @@ class DataCNESProxy
       $dataCNESStateList = $response->json();
 
       foreach ($dataCNESStateList as $key => $state) {
+
         $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->get("https://cnes.datasus.gov.br/services/municipios?estado={$key}");
 
         if ($response->ok()) {
@@ -62,6 +63,8 @@ class DataCNESProxy
     $cityList = $city::all();
     $establishmentList = [];
 
+    ini_set('memory_limit', '-1');
+
     foreach ($cityList as $key => $city) {
       $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->retry(3, 15000)->get("https://cnes.datasus.gov.br/services/estabelecimentos?municipio={$city->datacnes_id}");
 
@@ -83,7 +86,7 @@ class DataCNESProxy
 
         $establishmentList[$city->datacnes_id] = [
           'cnes' => '9999999',
-          'name' => 'Outros',
+          'name' => 'OUTROS',
           'management' => 'E',
           'legal_nature' => 1,
           'sus' => 'S',
@@ -126,7 +129,14 @@ class DataCNESProxy
     $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get("https://cnes.datasus.gov.br/services/profissionais?cpf={$data}");
 
     if ($response->ok()) {
-      return $response->json();
+      $user = $response->json()[0];
+      $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get("https://cnes.datasus.gov.br/services/profissionais/{$user['id']}");
+
+      if ($response->ok()) {
+        return $response->json();
+      }
+
+      return [$user];
     }
 
     return null;

@@ -14,6 +14,7 @@ class State extends Model
     protected $table = 'tb_states';
     protected $tableColumnPrefix = 'st';
     protected $primaryKey = 'st_id';
+    protected $relationships = [];
 
     protected $appends = [
         'name',

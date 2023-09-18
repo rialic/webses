@@ -14,6 +14,7 @@ class CBO extends Model
     protected $table = 'tb_cbo';
     protected $tableColumnPrefix = 'cbo';
     protected $primaryKey = 'cbo_id';
+    protected $relationships = [];
 
     protected $appends = [
         'name',

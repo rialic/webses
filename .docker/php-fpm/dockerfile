@@ -9,4 +9,6 @@ RUN apk --no-cache add vim tzdata shadow coreutils curl \
 && adduser -S -u 1000 -g docker docker \
 && rm -Rf /var/cache/apk/*
 
+COPY ./php.ini /usr/local/etc/php/php.ini
+
 USER docker:docker

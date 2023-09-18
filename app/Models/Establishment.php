@@ -14,6 +14,7 @@ class Establishment extends Model
     protected $table = 'tb_establishments';
     protected $tableColumnPrefix = 'es';
     protected $primaryKey = 'es_id';
+    protected $relationships = ['city'];
 
     protected $appends = [
         'name',

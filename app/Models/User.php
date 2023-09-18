@@ -50,7 +50,43 @@ class User extends Authenticatable
         // static::observe(new GlobalObserver);
     }
 
-    // GETTERS AND SETTERS
+    // GETTERS
+    public function getNameAttribute()
+    {
+        return $this->getAttributes()['us_name'];
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->getAttributes()['us_email'];
+    }
+
+    public function getCpfAttribute()
+    {
+        return $this->getAttributes()['us_cpf'];
+    }
+
+    public function getCnsAttribute()
+    {
+        return $this->getAttributes()['us_cns'];
+    }
+
+    public function getVerifiedAtAttribute()
+    {
+        return $this->getAttributes()['us_verified_at'];
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->getAttributes()['us_status'];
+    }
+
+    public function getPasswordAttribute()
+    {
+        return $this->getAttributes()['us_password'];
+    }
+
+    // SETTERS // TODO VERIFICAR SE A SENHA ESTÁ SENDO GERADA CORRETAMENTE NO BANCO
     public function setUsPasswordAttribute($value)
     {
         $this->attributes['us_password'] = bcrypt($value);
