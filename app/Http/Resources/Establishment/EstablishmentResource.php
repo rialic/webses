@@ -18,6 +18,8 @@ class EstablishmentResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'cnes' => $this->cnes,
+            'legal_nature' => $this->legal_nature,
             'city' => new CityResource($this->city)
         ];
     }

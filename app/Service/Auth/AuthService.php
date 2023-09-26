@@ -4,12 +4,11 @@ namespace App\Service\Auth;
 
 use App\Http\Requests\User\AuthUser;
 use App\Repository\Interfaces\UserInterface as UserRepository;
-use App\Service\Base\ResourceService;
-use Illuminate\Http\Request;
+use App\Service\Base\ServiceResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class AuthService extends ResourceService
+class AuthService extends ServiceResource
 {
   public function __construct(UserRepository $repository)
   {

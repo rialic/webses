@@ -4,9 +4,9 @@ namespace App\Service\User;
 
 use App\Http\Requests\User\StoreUpdateUser;
 use App\Repository\Interfaces\UserInterface as UserRepository;
-use App\Service\Base\ResourceService;
+use App\Service\Base\ServiceResource;
 
-class UserService extends ResourceService
+class UserService extends ServiceResource
 {
   protected $storeInputs = [
     'name',

@@ -18,6 +18,7 @@ class CityResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'ibge_code_city' => $this->datacnes_id,
             'state' => new StateResource($this->state)
         ];
     }

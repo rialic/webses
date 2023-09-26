@@ -20,7 +20,8 @@ class Establishment extends Model
         'name',
         'status',
         'cnes',
-        'datacnes_id'
+        'datacnes_id',
+        'legal_nature'
     ];
 
     protected $fillable = [

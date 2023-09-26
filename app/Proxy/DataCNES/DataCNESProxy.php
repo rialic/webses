@@ -4,6 +4,8 @@ namespace App\Proxy\DataCNES;
 
 use Illuminate\Support\Facades\Http;
 use App\Proxy\DataCNES\DataCNESHeaders;
+use Exception;
+use Illuminate\Http\Client\PendingRequest;
 
 class DataCNESProxy
 {
@@ -28,7 +30,7 @@ class DataCNESProxy
 
   private function fetchCities()
   {
-    $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->get('https://cnes.datasus.gov.br/services/estados');
+    $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->get(env('DTACNES_STATE_URL'));
 
     if ($response->ok()) {
       $state = app('App\Models\State');
@@ -38,7 +40,7 @@ class DataCNESProxy
 
       foreach ($dataCNESStateList as $key => $state) {
 
-        $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->get("https://cnes.datasus.gov.br/services/municipios?estado={$key}");
+        $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->get(env('DTACNES_CITY_URL') . $key);
 
         if ($response->ok()) {
           $acronym = $stateList->first(function ($state) use ($dataCNESStateList, $key) {
@@ -66,7 +68,7 @@ class DataCNESProxy
     ini_set('memory_limit', '-1');
 
     foreach ($cityList as $key => $city) {
-      $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->retry(3, 15000)->get("https://cnes.datasus.gov.br/services/estabelecimentos?municipio={$city->datacnes_id}");
+      $response = Http::withHeaders($this->dataCNESHeaders->getEstablishmentHeader())->retry(3, 15000)->get(env('DTACNES_ESTABLISHMENT_URL') . $city->datacnes_id);
 
       if ($response->ok()) {
         $dataCNESEstablishmentList = $response->json();
@@ -104,7 +106,7 @@ class DataCNESProxy
 
   private function fetchCBO()
   {
-    $response = Http::withHeaders($this->dataCNESHeaders->getCBOHeader())->get('https://sistemas.unasus.gov.br/ws_cbo/cbo.php?words=%%%');
+    $response = Http::withHeaders($this->dataCNESHeaders->getCBOHeader())->get(env('DTACNES_CBO_URL'));
 
     if ($response->ok()) {
       $cboList = [];
@@ -126,11 +128,11 @@ class DataCNESProxy
 
   private function fetchUser($data)
   {
-    $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get("https://cnes.datasus.gov.br/services/profissionais?cpf={$data}");
+    $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CPF_URL') . $data);
 
     if ($response->ok()) {
       $user = $response->json()[0];
-      $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get("https://cnes.datasus.gov.br/services/profissionais/{$user['id']}");
+      $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CNS_URL') . $user['id']);
 
       if ($response->ok()) {
         return $response->json();

@@ -86,7 +86,7 @@ class User extends Authenticatable
         return $this->getAttributes()['us_password'];
     }
 
-    // SETTERS // TODO VERIFICAR SE A SENHA ESTÁ SENDO GERADA CORRETAMENTE NO BANCO
+    // SETTERS
     public function setUsPasswordAttribute($value)
     {
         $this->attributes['us_password'] = bcrypt($value);

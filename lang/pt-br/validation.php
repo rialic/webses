@@ -196,7 +196,9 @@ return [
         'phone' => 'Telefone',
         'sex' => 'Sexo',
         'state' => 'Estado',
-        'whatsapp' => 'Whatsapp'
+        'whatsapp' => 'Whatsapp',
+        'establishment' => 'Unidade de Saúde',
+        'confirm_password' => 'Confirma senha'
     ],
 
 ];

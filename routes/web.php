@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('phpinfo', fn() => phpinfo());
+// Route::get('phpinfo', fn() => phpinfo());

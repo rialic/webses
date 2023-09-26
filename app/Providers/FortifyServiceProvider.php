@@ -37,6 +37,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Login
         Fortify::authenticateUsing(function (Request $request){
             $user = User::where('us_email', $request->input('email'))->orWhere('us_cpf', $request->input('email'))->first();
 
@@ -52,6 +53,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // Rate Limiter
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
