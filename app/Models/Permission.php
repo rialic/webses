@@ -14,6 +14,7 @@ class Permission extends Model
     protected $table = 'tb_permissions';
     protected $tableColumnPrefix = 'pe';
     protected $primaryKey = 'pe_id';
+    protected $relationships = ['roles'];
 
     protected $appends = [
         'name',
@@ -27,6 +28,6 @@ class Permission extends Model
 
     public function roles()
     {
-        return $this->belongsToMany('tb_role_permissions', 'pe_id', 'ro_id');
+        return $this->belongsToMany(Role::class, 'tb_role_permissions', 'pe_id', 'ro_id');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Resources\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
 class UserResource extends JsonResource
 {
     /**
@@ -21,10 +20,14 @@ class UserResource extends JsonResource
             ];
         }
 
+        // TODO RETORNAR AS PERMISSIONS DO USUÁRIO QUANDO A ROTAR FOR /me
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
             'email' => $this->email,
+            'verified_at' => $this->verified_at,
+            'current_subdomain' => $this->current_subdomain,
+            // roles
         ];
     }
 }

@@ -8,7 +8,7 @@ class ManagerTenant
 {
   public function subdomain()
   {
-    $hostFragments = explode('.', optional(optional(request()->header())['subdomain'])[0]);
+    $hostFragments = explode('.', optional(optional(request()->header())['domain'])[0]);
 
     if (isset($hostFragments[0]) && !empty($hostFragments[0])) return $hostFragments[0];
   }

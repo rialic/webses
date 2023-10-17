@@ -14,16 +14,17 @@ return new class extends Migration
     {
         Schema::create('tb_role_permissions', function (Blueprint $table) {
             $table->unsignedBigInteger('ro_id');
-            $table->unsignedBigInteger('us_id');
+            $table->unsignedBigInteger('pe_id');
             $table->unsignedBigInteger('tenant_id');
             $table->boolean('rp_status')->default(true);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
             $table->foreign('ro_id')->references('ro_id')->on('tb_roles')->onDelete('cascade');
-            $table->foreign('us_id')->references('us_id')->on('tb_users')->onDelete('cascade');
+            $table->foreign('pe_id')->references('pe_id')->on('tb_permissions')->onDelete('cascade');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_tenants')->onDelete('cascade');
 
-            $table->primary(['ro_id', 'us_id']);
+            $table->primary(['ro_id', 'pe_id']);
 
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';

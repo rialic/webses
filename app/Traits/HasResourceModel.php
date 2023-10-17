@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait HasResourceModel
@@ -25,23 +26,19 @@ trait HasResourceModel
   public function __get($field)
   {
     $propertyExits = (in_array($field, $this->appends) || in_array($field, $this->fillable));
-    $isRelationField = in_array($field, $this->getRelationships());
+    $isRelationField = in_array($field, $this->getRelationships()) || str_ends_with($field, '_id');
 
-    if ($propertyExits) {
+    if ($propertyExits && !$isRelationField) {
       $method = 'get' . Str::studly($field) . 'Attribute';
 
       if (method_exists($this, $method)) {
         return $this->{$method}();
       }
 
-      return  $this->getAttributes()[$field] ?? $this->getAttributes()["{$this->getTableColumnPrefix()}_{$field}"];
+      return (array_key_exists($field, $this->getAttributes())) ? $this->getAttributes()[$field] : $this->{$this->getTableColumnPrefix() . '_' . $field};
     }
 
-    if ($isRelationField) {
-      $model = app('App\Models\\' . ucfirst($field));
-
-      return $model->where("{$model->getTableColumnPrefix()}_id", optional($this->getAttributes())["{$model->getTableColumnPrefix()}_id"])->first() ?: $model;
-    }
+    return parent::getAttribute($field);
   }
 
   public function getIdAttribute()

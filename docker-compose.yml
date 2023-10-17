@@ -4,6 +4,7 @@ networks:
   app:
   nginx:
   db:
+  redis:
 
 services:
   nginx:
@@ -44,6 +45,7 @@ services:
       - app
       - nginx
       - db
+      - redis
 
   db:
     image: linuxserver/mariadb:latest
@@ -60,6 +62,14 @@ services:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
     networks:
       - db
+
+  redis:
+    image: redis:7.2.1-alpine3.18
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - redis
 
   #CONTAINER SERVICES
 
@@ -98,6 +108,7 @@ services:
     networks:
       - app
       - db
+      - redis
 
   phpunit:
     build:
@@ -114,6 +125,27 @@ services:
     networks:
       - app
       - db
+
+  ###################################################################################
+  # Available queues                                                                #
+  # - php artisan queue:work --queue=verify-email                                   #
+  ###################################################################################
+
+  # queue:
+  #   build:
+  #     context: ./.docker/php-fpm
+  #     dockerfile: Dockerfile
+  #   image: queue
+  #   container_name: queue
+  #   working_dir: /var/www
+  #   volumes:
+  #     - ./:/var/www
+  #   entrypoint: ["php", "artisan", "queue:work", "--queue=verify-email"]
+  #   networks:
+  #     - app
+  #     - nginx
+  #     - db
+  #     - redis
 
   # scheduler:
   #   build:

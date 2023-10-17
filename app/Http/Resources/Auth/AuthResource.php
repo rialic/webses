@@ -20,7 +20,8 @@ class AuthResource implements LoginResponseContract
             'uuid' => $user->uuid,
             'name' => $user->name,
             'email' => $user->email,
-            'token' => $user->createToken($request->device_name)->plainTextToken
+            'verified_at' => $user->verified_at,
+            'current_subdomain' => $user->current_subdomain
         ]);
     }
 }

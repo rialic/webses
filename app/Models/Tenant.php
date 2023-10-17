@@ -14,6 +14,7 @@ class Tenant extends Model
     protected $table = 'tb_tenants';
     protected $tableColumnPrefix = 'tenant';
     protected $primaryKey = 'tenant_id';
+    protected $relationships = ['modules', 'users'];
 
     protected $appends = [
         'name',

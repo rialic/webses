@@ -34,11 +34,11 @@ class Establishment extends Model
     // RELATIONSHIPS
     public function city()
     {
-        return $this->belongsTo(City::class, 'es_id', 'es_id');
+        return $this->belongsTo(City::class, 'ci_id', 'ci_id')->withDefault();
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'tb_establisment_users_cbo', 'es_id', 'us_id')->withPivot(['eu_primary_bond', 'eu_status']);
+        return $this->belongsToMany(User::class, 'tb_establishment_users', 'es_id', 'us_id')->withPivot(['eu_primary_bond']);
     }
 }

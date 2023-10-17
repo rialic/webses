@@ -15,15 +15,16 @@ return new class extends Migration
         Schema::create('tb_establishment_users', function (Blueprint $table) {
             $table->boolean('eu_primary_bond');
             $table->boolean('eu_status')->default(true);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
             $table->unsignedBigInteger('es_id');
             $table->unsignedBigInteger('us_id');
             $table->unsignedBigInteger('cbo_id');
 
-            $table->foreign('es_id')->references('es_id')->on('tb_establishments');
-            $table->foreign('us_id')->references('us_id')->on('tb_users');
-            $table->foreign('cbo_id')->references('cbo_id')->on('tb_cbo');
+            $table->foreign('es_id')->references('es_id')->on('tb_establishments')->onDelete('cascade');
+            $table->foreign('us_id')->references('us_id')->on('tb_users')->onDelete('cascade');
+            $table->foreign('cbo_id')->references('cbo_id')->on('tb_cbo')->onDelete('cascade');
 
             $table->primary(['es_id', 'us_id']);
 

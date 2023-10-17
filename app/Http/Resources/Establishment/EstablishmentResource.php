@@ -5,6 +5,7 @@ namespace App\Http\Resources\Establishment;
 use App\Http\Resources\City\CityResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class EstablishmentResource extends JsonResource
 {

@@ -20,7 +20,7 @@ class CitySeeder extends Seeder
                 $city::firstOrCreate([
                     'ci_name' => $dataCNESCity,
                     'st_id' => $state->id,
-                    'ci_datacnes_id' => $dataCNESId
+                    'ci_ibge_code' => $dataCNESId
                 ]);
             });
         });

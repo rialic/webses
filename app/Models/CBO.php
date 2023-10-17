@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class CBO extends Model
 {
-    use HasFactory, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadOf HasUuids; }
+    use HasFactory, HasUuids, HasResourceModel {
+        HasResourceModel::uniqueIds insteadof HasUuids;
+    }
 
     protected $table = 'tb_cbo';
     protected $tableColumnPrefix = 'cbo';
     protected $primaryKey = 'cbo_id';
-    protected $relationships = [];
+    protected $relationships = ['users'];
 
     protected $appends = [
         'name',
@@ -31,6 +33,6 @@ class CBO extends Model
     // RELATIONSHIP
     public function users()
     {
-        $this->belongsToMany(User::class, 'tb_establisment_users_cbo', 'co_id', 'us_id');
+        $this->belongsToMany(User::class, 'tb_establishment_users', 'co_id', 'us_id');
     }
 }

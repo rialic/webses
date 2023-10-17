@@ -14,6 +14,7 @@ class Role extends Model
     protected $table = 'tb_roles';
     protected $tableColumnPrefix = 'ro';
     protected $primaryKey = 'ro_id';
+    protected $relationships = ['users', 'permissions'];
 
     protected $appends = [
         'name',
@@ -28,11 +29,11 @@ class Role extends Model
     // RELATIONSHIPS
     public function users()
     {
-        return $this->belongsToMany('tb_user_roles', 'ro_id', 'us_id');
+        return $this->belongsToMany(User::class, 'tb_user_roles', 'ro_id', 'us_id');
     }
 
     public function permissions()
     {
-        return $this->belongsToMany('tb_role_permissions', 'ro_id', 'pe_id');
+        return $this->belongsToMany(Permission::class, 'tb_role_permissions', 'ro_id', 'pe_id');
     }
 }

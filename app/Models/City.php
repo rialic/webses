@@ -14,7 +14,7 @@ class City extends Model
     protected $table = 'tb_cities';
     protected $tableColumnPrefix = 'ci';
     protected $primaryKey = 'ci_id';
-    protected $relationships = ['state'];
+    protected $relationships = ['state', 'establishments'];
 
     protected $appends = [
         'name',
@@ -27,7 +27,7 @@ class City extends Model
     protected $fillable = [
         'ci_name',
         'ci_status',
-        'ci_datacnes_id',
+        'ibge_code',
         'ci_macro_region_id',
         'ci_micro_region_id',
         'st_id'
@@ -36,7 +36,7 @@ class City extends Model
     // RELATIONSHIPS
     public function state()
     {
-        return $this->belongsTo(State::class, 'st_id', 'st_id');
+        return $this->belongsTo(State::class, 'st_id', 'st_id')->withDefault();
     }
 
     public function establishments()

@@ -16,10 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('tenant_id');
             $table->unsignedBigInteger('us_id');
             $table->boolean('tu_status')->default(true);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_tenants')->onDelete('cascade');
-            $table->foreign('us_id')->references('us_id')->on('tb_users')->onDelete('cascade');
+            $table->foreign('us_id')->references('us_id')->on('tb_users');
 
             $table->primary(['tenant_id', 'us_id']);
 

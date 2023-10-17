@@ -6,7 +6,6 @@ namespace App\Repository\Base;
 use App\Exceptions\FilterByMethodNotDefined;
 use App\Repository\RepositoryException\EntityNotDefined;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DBRepository implements DBRepositoryInterface

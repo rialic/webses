@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('us_email')->unique();
             $table->enum('us_type_professional', ['01 Profissional de saúde', '02 PROVAB', '03 Mais médicos', '04 Outros'])->default('01 Profissional de saúde');
             $table->timestamp('us_verified_at')->nullable();
+            $table->string('us_current_subdomain');
             $table->string('us_password');
             $table->boolean('us_status')->default(true);
             $table->rememberToken();

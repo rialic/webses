@@ -11,8 +11,8 @@ class EstablishmentController extends Controller
 {
     use HasResourceController;
 
-    private $service;
-    private $resourceColection;
+    protected $service;
+    protected $resourceColection;
 
     public function __construct(EstablishmentService $service)
     {

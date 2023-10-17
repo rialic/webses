@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\State;
-use App\Models\City;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,5 +13,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CitySeeder::class);
         $this->call(EstablishmentSeeder::class);
         $this->call(CBOSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(PermissionSeeder::class);
+        $this->call(RolePermissionSeeder::class);
+        $this->call(ModuleSeeder::class);
+        $this->call(TenantModuleSeeder::class);
+        $this->call(SubmoduleSeederSeeder::class);
     }
 }

@@ -15,7 +15,20 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register', 'states', 'cities'],
+    'paths' => [
+        'api/*',
+        'sanctum/csrf-cookie',
+        'login',
+        'logout',
+        'register',
+        'datacnes-user',
+        'email/verify',
+        'resent-email-verification',
+        'states',
+        'cities',
+        'establishments',
+        'cbo'
+    ],
 
     'allowed_methods' => ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 
@@ -23,7 +36,7 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['Accept', 'Authorization', 'Cache-Control', 'Content-Type', 'Origin', 'User-Agent', 'X-Requested-With', 'Subdomain', 'X-XSRF-TOKEN', 'withCredentials'],
+    'allowed_headers' => ['Accept', 'Authorization', 'Cache-Control', 'Content-Type', 'Origin', 'User-Agent', 'X-Requested-With', 'Domain', 'X-XSRF-TOKEN', 'withCredentials'],
 
     'exposed_headers' => [],
 

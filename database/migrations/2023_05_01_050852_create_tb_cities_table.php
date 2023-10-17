@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ci_macro_region_id')->nullable();
             $table->unsignedBigInteger('ci_micro_region_id')->nullable();
             $table->boolean('ci_status')->default(true);
-            $table->string('ci_datacnes_id');
+            $table->string('ci_ibge_code');
             $table->timestamps();
 
             $table->unsignedBigInteger('st_id');

@@ -14,6 +14,7 @@ class Module extends Model
     protected $table = 'tb_modules';
     protected $tableColumnPrefix = 'mo';
     protected $primaryKey = 'mo_id';
+    protected $relationships = ['tenants'];
 
     protected $appends = [
         'name',

@@ -2,32 +2,37 @@
 
 namespace App\Models;
 
+use App\Jobs\UserVerifyEmailJob;
 use App\Models\Scopes\TenantScope;
 use App\Observers\Global\GlobalObserver;
 use App\Traits\HasResourceModel;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadof HasUuids; }
+    use VerifyEmail, HasApiTokens, HasFactory, Notifiable, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadof HasUuids; }
 
     protected $table = 'tb_users';
     protected $tableColumnPrefix = 'us';
     protected $primaryKey = 'us_id';
+    protected $relationships = ['tenants', 'cbos', 'establishments', 'roles'];
 
     protected $appends = [
         'name',
+        'first_name',
         'email',
         'cpf',
         'cns',
         'verified_at',
         'status',
         'password',
+        'current_subdomain',
     ];
 
     protected $fillable = [
@@ -37,6 +42,7 @@ class User extends Authenticatable
         'us_cpf',
         'us_cns',
         'us_verified_at',
+        'us_current_subdomain',
         'us_status',
         'es_id',
         'cbo_id'
@@ -51,39 +57,9 @@ class User extends Authenticatable
     }
 
     // GETTERS
-    public function getNameAttribute()
+    public function getFirstNameAttribute()
     {
-        return $this->getAttributes()['us_name'];
-    }
-
-    public function getEmailAttribute()
-    {
-        return $this->getAttributes()['us_email'];
-    }
-
-    public function getCpfAttribute()
-    {
-        return $this->getAttributes()['us_cpf'];
-    }
-
-    public function getCnsAttribute()
-    {
-        return $this->getAttributes()['us_cns'];
-    }
-
-    public function getVerifiedAtAttribute()
-    {
-        return $this->getAttributes()['us_verified_at'];
-    }
-
-    public function getStatusAttribute()
-    {
-        return $this->getAttributes()['us_status'];
-    }
-
-    public function getPasswordAttribute()
-    {
-        return $this->getAttributes()['us_password'];
+        return substr($this->name, 0, strpos($this->name, ' '));
     }
 
     // SETTERS
@@ -100,16 +76,16 @@ class User extends Authenticatable
 
     public function cbos()
     {
-        return $this->belongsToMany(CBO::class, 'tb_establisment_users_cbo', 'us_id', 'cbo_id')->withPivot(['eu_primary_bond', 'eu_status']);
+        return $this->belongsToMany(CBO::class, 'tb_establishment_users', 'us_id', 'cbo_id')->withPivot(['eu_primary_bond']);
     }
 
     public function establishments()
     {
-        return $this->belongsToMany(Establishment::class, 'tb_establisment_users_cbo', 'us_id', 'es_id')->withPivot(['eu_primary_bond', 'eu_status']);
+        return $this->belongsToMany(Establishment::class, 'tb_establishment_users', 'us_id', 'es_id')->withPivot(['eu_primary_bond']);
     }
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'tb_user_roles', 'us_id', 'es_id');
+        return $this->belongsToMany(Role::class, 'tb_user_roles', 'us_id', 'ro_id');
     }
 }

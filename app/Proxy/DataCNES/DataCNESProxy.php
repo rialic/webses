@@ -4,8 +4,6 @@ namespace App\Proxy\DataCNES;
 
 use Illuminate\Support\Facades\Http;
 use App\Proxy\DataCNES\DataCNESHeaders;
-use Exception;
-use Illuminate\Http\Client\PendingRequest;
 
 class DataCNESProxy
 {
@@ -128,6 +126,7 @@ class DataCNESProxy
 
   private function fetchUser($data)
   {
+    // TODO VERIFICAR SE O CPF É VÁLIDO ANTES DE REALIZAR A PESQUISA NO DATACNES
     $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CPF_URL') . $data);
 
     if ($response->ok()) {

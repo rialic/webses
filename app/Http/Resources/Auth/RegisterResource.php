@@ -2,23 +2,34 @@
 
 namespace App\Http\Resources\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Repository\Interfaces\UserInterface as UserRepository;
+use Illuminate\Support\Facades\Log;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 
-class RegisterResource extends JsonResource
+class RegisterResource implements RegisterResponseContract
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * Create an HTTP response that represents the object.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function toResponse($request)
+    {
+        $user = $this->userRepository->getFirstData(parseFilters(['cpf' => $request->cpf]));
+
         return [
-            'uuid' => $this->uuid,
-            'name' => $this->name,
-            'email' => $this->email,
-            'token' => $this->resource->createToken($request->device_name)->plainTextToken
+            'uuid' => $user->uuid,
+            'name' => $user->name,
+            'email' => $user->email,
+            'token' => $user->createToken($request->device_name)->plainTextToken
         ];
     }
 }

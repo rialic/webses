@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,8 +25,26 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        //
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        $user = $request->user();
+        $isXMLHttpRequest = $request->ajax();
+
+        if ($exception instanceof HttpException && $isXMLHttpRequest) {
+            return response()->json([
+                'user' => [
+                    'uuid' => $user->uuid,
+                    'name' => $user->name,
+                    'verified_at' => $user->verified_at,
+                    'current_subdomain' => $user->current_subdomain,
+                ],
+                'message' => $exception->getMessage()
+            ], $exception->getStatusCode());
+        }
+
+        return parent::render($request, $exception);
     }
 }

@@ -22,7 +22,7 @@ trait HasResourceController
   {
     $model = $this->service->store();
 
-    return new $this->resourceColection($model);
+    return (new $this->resourceColection($model))->response()->setStatusCode(201);
   }
 
   public function update($identify)

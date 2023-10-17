@@ -17,7 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('us_id');
             $table->unsignedBigInteger('tenant_id');
             $table->boolean('ur_status')->default(true);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
             $table->foreign('ro_id')->references('ro_id')->on('tb_roles')->onDelete('cascade');
             $table->foreign('us_id')->references('us_id')->on('tb_users')->onDelete('cascade');
