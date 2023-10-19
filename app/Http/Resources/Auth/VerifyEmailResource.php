@@ -16,8 +16,6 @@ class VerifyEmailResource implements VerifyEmailResponseContract
             return Str::contains($subdomainItem, $subdomain);
         });
 
-        Auth::login($request->user());
-
         return redirect("https://{$url}/home");
     }
 }
