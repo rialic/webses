@@ -30,6 +30,9 @@ class RolePermissionSeeder extends Seeder
             /*----------------------------------------------------------------*\
               USER
             \*----------------------------------------------------------------*/
+            $rolePermission = $this->hasRolePermission('USER', 'MAIN', $tenant->name);
+            $this->createRolePermission($rolePermission, $tenant->id);
+
             $rolePermission = $this->hasRolePermission('USER', 'HOME', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
 

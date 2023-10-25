@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repository\Interfaces\{UserInterface, StateInterface, CityInterface, EstablishmentInterface, CBOInterface, RoleInterface, PermissionInterface};
-use App\Repository\{UserRepository, StateRepository, CityRepository, EstablishmentRepository, CBORepository, RoleRepository, PermissionRepository};
+use App\Repository\Interfaces\{UserInterface, StateInterface, CityInterface, EstablishmentInterface, CBOInterface, RoleInterface, PermissionInterface, ModuleInterface};
+use App\Repository\{UserRepository, StateRepository, CityRepository, EstablishmentRepository, CBORepository, RoleRepository, PermissionRepository, ModuleRepository};
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -20,6 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CBOInterface::class, CBORepository::class);
         $this->app->bind(RoleInterface::class, RoleRepository::class);
         $this->app->bind(PermissionInterface::class, PermissionRepository::class);
+        $this->app->bind(ModuleInterface::class, ModuleRepository::class);
     }
 
     /**

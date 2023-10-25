@@ -20,11 +20,13 @@ class PermissionSeeder extends Seeder
         /*----------------------------------------------------------------*\
           HOME
         \*----------------------------------------------------------------*/
+        Permission::firstOrCreate(['pe_name' => 'MAIN']);
         Permission::firstOrCreate(['pe_name' => 'HOME']);
 
         /*----------------------------------------------------------------*\
-          WEB
+        WEB
         \*----------------------------------------------------------------*/
+
         Permission::firstOrCreate(['pe_name' => 'WEB.MENU']);
 
         Permission::firstOrCreate(['pe_name' => 'WEB.MEETING']);

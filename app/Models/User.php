@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Jobs\UserVerifyEmailJob;
-use App\Models\Scopes\TenantScope;
-use App\Observers\Global\GlobalObserver;
 use App\Traits\HasResourceModel;
 use App\Traits\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use VerifyEmail, HasApiTokens, HasFactory, Notifiable, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadof HasUuids; }
+    use VerifyEmail, HasFactory, Notifiable, HasUuids, HasResourceModel { HasResourceModel::uniqueIds insteadof HasUuids; }
 
     protected $table = 'tb_users';
     protected $tableColumnPrefix = 'us';

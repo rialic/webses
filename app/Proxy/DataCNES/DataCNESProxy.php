@@ -126,18 +126,20 @@ class DataCNESProxy
 
   private function fetchUser($data)
   {
-    // TODO VERIFICAR SE O CPF É VÁLIDO ANTES DE REALIZAR A PESQUISA NO DATACNES
     $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CPF_URL') . $data);
 
     if ($response->ok()) {
-      $user = $response->json()[0];
-      $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CNS_URL') . $user['id']);
+      $user = optional($response->json())[0];
 
-      if ($response->ok()) {
-        return $response->json();
+      if ($user) {
+        $response = Http::withHeaders($this->dataCNESHeaders->getProfessionalsHeader())->get(env('DTACNES_USER_CNS_URL') . $user['id']);
+
+        if ($response->ok()) {
+          return $response->json();
+        }
+
+        return [$user];
       }
-
-      return [$user];
     }
 
     return null;

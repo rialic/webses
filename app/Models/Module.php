@@ -14,7 +14,7 @@ class Module extends Model
     protected $table = 'tb_modules';
     protected $tableColumnPrefix = 'mo';
     protected $primaryKey = 'mo_id';
-    protected $relationships = ['tenants'];
+    protected $relationships = ['tenants', 'submodules'];
 
     protected $appends = [
         'name',
@@ -24,5 +24,10 @@ class Module extends Model
     public function tenants()
     {
         return $this->belongsToMany(Tenant::class, 'tb_tenant_modules', 'mo_id', 'tenant_id');
+    }
+
+    public function submodules()
+    {
+        return $this->hasMany(Submodule::class, 'mo_id', 'mo_id');
     }
 }

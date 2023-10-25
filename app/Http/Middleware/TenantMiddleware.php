@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Tenant\ManagerTenant;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TenantMiddleware
@@ -17,15 +16,12 @@ class TenantMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // $managerTenant = app(ManagerTenant::class);
-        // $tenant = $managerTenant->tenant();
+        $managerTenant = app(ManagerTenant::class);
+        $tenant = $managerTenant->tenant();
 
-        // if (!$tenant) {
-        //     // TODO => CORRIGIR MIDDLEWARE PARA FAZER UM RETORNO MAIS AMIGÁVEL DO ERRO
-        //     return abort(500);
-        // }
-
-        // Log::info(['Here => ' => "{$request->method()} <=> {$request->path()}"]);
+        if (!$tenant) {
+            abort(500);
+        }
 
         return $next($request);
     }

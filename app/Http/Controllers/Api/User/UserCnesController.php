@@ -28,6 +28,6 @@ class UserCnesController extends Controller
             return response()->json(['data' => ['user' => $user]]);
         }
 
-        return response()->json(['data' => null], 400);
+        return response()->json(['data' => null], 200);
     }
 }

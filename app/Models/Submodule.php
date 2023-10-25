@@ -14,7 +14,7 @@ class Submodule extends Model
     protected $table = 'tb_submodules';
     protected $tableColumnPrefix = 'sub';
     protected $primaryKey = 'sub_id';
-    protected $relationships = ['tenants'];
+    protected $relationships = ['module'];
 
     protected $appends = [
         'name',
