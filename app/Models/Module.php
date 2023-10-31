@@ -21,6 +21,7 @@ class Module extends Model
         'status'
     ];
 
+    // RELATIONSHIPS
     public function tenants()
     {
         return $this->belongsToMany(Tenant::class, 'tb_tenant_modules', 'mo_id', 'tenant_id');

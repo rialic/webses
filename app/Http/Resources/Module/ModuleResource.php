@@ -13,7 +13,7 @@ class ModuleResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $reques): array
     {
         return [
             'uuid' => $this->uuid,

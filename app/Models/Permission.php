@@ -26,6 +26,7 @@ class Permission extends Model
         'pe_status'
     ];
 
+    // RELATIONSHIPS
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'tb_role_permissions', 'pe_id', 'ro_id');

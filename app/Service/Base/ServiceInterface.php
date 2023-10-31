@@ -8,4 +8,5 @@ interface ServiceInterface
   public function index();
   public function store();
   public function update($identity);
+  public function delete($uuid);
 }

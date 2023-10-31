@@ -29,20 +29,20 @@ class PermissionSeeder extends Seeder
 
         Permission::firstOrCreate(['pe_name' => 'WEB.MENU']);
 
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--VIEW']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--CREATE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--EDIT']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--UPDATE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--DELETE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.MEETING--CERTIFICATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--VIEW']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--CREATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--EDIT']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--UPDATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--DELETE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.EVENT--CERTIFICATE']);
 
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--VIEW']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--CREATE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--EDIT']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--UPDATE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--DELETE']);
-        Permission::firstOrCreate(['pe_name' => 'WEB.CLASS--CERTIFICATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--VIEW']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--CREATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--EDIT']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--UPDATE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--DELETE']);
+        Permission::firstOrCreate(['pe_name' => 'WEB.COURSE--CERTIFICATE']);
     }
 }

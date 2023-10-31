@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
+
 trait HasResourceController
 {
   public function show()
@@ -30,5 +32,12 @@ trait HasResourceController
     $model = $this->service->update($identify);
 
     return new $this->resourceColection($model);
+  }
+
+  public function destroy($uuid)
+  {
+    $this->service->delete($uuid);
+
+    return response()->json(['ok' => true, 'message' => 'Excluído com sucesso.']);
   }
 }

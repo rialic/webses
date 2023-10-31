@@ -21,8 +21,9 @@ class Submodule extends Model
         'status'
     ];
 
+    // RELATIONSHIPS
     public function module()
     {
-        return $this->belongsTo(Module::class, 'mo_id', 'mo_id');
+        return $this->belongsTo(Module::class);
     }
 }

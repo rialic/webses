@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $table = 'tb_users';
     protected $tableColumnPrefix = 'us';
     protected $primaryKey = 'us_id';
-    protected $relationships = ['tenants', 'cbos', 'establishments', 'roles'];
+    protected $relationships = ['tenants', 'cbos', 'establishments', 'roles', 'events'];
 
     protected $appends = [
         'name',
@@ -84,5 +84,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'tb_user_roles', 'us_id', 'ro_id');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'tb_event_participants', 'us_id', 'ev_id');
     }
 }

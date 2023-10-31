@@ -2,6 +2,8 @@
 
 namespace App\Service\Base;
 
+use App\Exceptions\StoreInputsNotDefined;
+use App\Exceptions\UpdateInputsNotDefined;
 use App\Validator\Validator;
 use Illuminate\Support\Str;
 
@@ -33,6 +35,10 @@ class ServiceResource implements ServiceInterface
   {
     $data = request()->only($this->storeInputs);
 
+    if (empty($data) || !isset($data)) {
+      throw new StoreInputsNotDefined();
+    }
+
     if (!is_null($this->validatorRequest())) {
       $this->validator($data)->validate();
     }
@@ -44,11 +50,20 @@ class ServiceResource implements ServiceInterface
   {
     $data = request()->only($this->updateInputs);
 
+    if (empty($data) || !isset($data)) {
+      throw new UpdateInputsNotDefined();
+    }
+
     if (!is_null($this->validatorRequest())) {
       $this->validator($data)->validate();
     }
 
     return $this->repository->update($data, $identity);
+  }
+
+  public function delete($uuid)
+  {
+    return $this->repository->destroy($uuid);
   }
 
   public function validator($inputs): Validator

@@ -14,7 +14,7 @@ class Tenant extends Model
     protected $table = 'tb_tenants';
     protected $tableColumnPrefix = 'tenant';
     protected $primaryKey = 'tenant_id';
-    protected $relationships = ['modules', 'users'];
+    protected $relationships = ['modules', 'users', 'events'];
 
     protected $appends = [
         'name',
@@ -37,5 +37,10 @@ class Tenant extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'tb_tenant_modules', 'tenant_id', 'us_id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'tenant_id', 'tenant_id');
     }
 }

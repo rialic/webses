@@ -85,7 +85,7 @@ class DBRepository implements DBRepositoryInterface
         $model = $this->query($params);
 
         if ($isPaginable) {
-            return ($limit !== -1) ? $model->paginate($limit) : $model->paginate();
+            return ($limit !== -1) ? $model->paginate($limit)->onEachSide(1) : $model->paginate()->onEachSide(1);
         }
 
         return ($limit !== -1) ? $model->limit($limit)->get() : $model->get();
@@ -113,6 +113,29 @@ class DBRepository implements DBRepositoryInterface
         $model = $this->findByUuid($identify);
 
         return $this->store($data, $model);
+    }
+
+    public function destroy($uuid)
+    {
+        $model = $this->findByUuid($uuid);
+
+        return $model->delete();
+    }
+
+    public function getDataModels($data)
+    {
+        foreach($data as $field => $value) {
+            $modelData = Str::contains($field, '_uuid');
+
+            if ($modelData) {
+                $field = substr($field, 0, stripos($field, '_'));
+                $model = app("\App\Models\\" . ucfirst($field));
+                $model = $model::where("{$model->getTableColumnPrefix()}_uuid", $value)->first();
+                $data[$field] = $model;
+            }
+        }
+
+        return $data;
     }
 
     private function filter($model, $params)

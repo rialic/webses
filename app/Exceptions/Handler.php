@@ -32,10 +32,11 @@ class Handler extends ExceptionHandler
         $user = $request->user();
         $isXMLHttpRequest = $request->ajax();
 
+
         if ($exception instanceof HttpException && $isXMLHttpRequest) {
             return response()->json([
                 'user' => [
-                    'uuid' => $user->uuid,
+                    'uuid' => optional($user)->uuid,
                     'name' => $user->name,
                     'verified_at' => $user->verified_at,
                     'current_subdomain' => $user->current_subdomain,

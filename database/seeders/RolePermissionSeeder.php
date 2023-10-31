@@ -10,6 +10,8 @@ use Illuminate\Database\Seeder;
 
 class RolePermissionSeeder extends Seeder
 {
+    const MASTER = 'master';
+
     /**
      * Run the database seeds.
      */
@@ -39,20 +41,35 @@ class RolePermissionSeeder extends Seeder
             $rolePermission = $this->hasRolePermission('USER', 'WEB.MENU', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
 
-            $rolePermission = $this->hasRolePermission('USER', 'WEB.MEETING', $tenant->name);
+            $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
 
-            $rolePermission = $this->hasRolePermission('USER', 'WEB.MEETING--VIEW', $tenant->name);
+            $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT--VIEW', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
 
-            $rolePermission = $this->hasRolePermission('USER', 'WEB.MEETING--CERTIFICATE', $tenant->name);
+            $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT--CERTIFICATE', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
         });
 
         /*----------------------------------------------------------------*\
           ROLE FOR SPECIFIC TENANTS
         \*----------------------------------------------------------------*/
-        //
+        $tenantList->each(function ($tenant, $key) {
+            /*----------------------------------------------------------------*\
+              USER
+            \*----------------------------------------------------------------*/
+            // MASTER TENANT
+            if ($tenant->subdomain === self::MASTER) {
+                $rolePermission = $this->hasRolePermission('USER', 'WEB.COURSE', $tenant->name);
+                $this->createRolePermission($rolePermission, $tenant->id);
+
+                $rolePermission = $this->hasRolePermission('USER', 'WEB.COURSE--VIEW', $tenant->name);
+                $this->createRolePermission($rolePermission, $tenant->id);
+
+                $rolePermission = $this->hasRolePermission('USER', 'WEB.COURSE--CERTIFICATE', $tenant->name);
+                $this->createRolePermission($rolePermission, $tenant->id);
+            }
+        });
     }
 
     private function hasRolePermission($role, $permission, $tenant)

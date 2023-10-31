@@ -65,4 +65,14 @@ trait HasResourceModel
   {
     return $this->relationships ?: [];
   }
+
+  public function getDateFormatted($value)
+  {
+    return date('d/m/Y', strtotime($value));
+  }
+
+  public function getDateTimeFormatted($value)
+  {
+    return date('d/m/Y H:i:s', strtotime($value));
+  }
 }

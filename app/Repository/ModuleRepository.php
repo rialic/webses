@@ -19,7 +19,6 @@ class ModuleRepository extends DBRepository implements ModuleInterface
         $tenant = app('App\Tenant\ManagerTenant')->tenant();
         $query = parent::query($params);
 
-        return $query->whereRelation('tenants', 'tb_tenant_modules.tenant_id', $tenant->id)
-            ->with('submodules');
+        return $query->whereRelation('tenants', 'tb_tenant_modules.tenant_id', $tenant->id)->with('submodules');
     }
 }
