@@ -31,7 +31,7 @@ class LoginUserRequest extends LoginRequest
         return [
             'email' => ['required'],
             'remember_me' => ['boolean'],
-            'password' => ['required', 'min:6', 'max:35'],
+            'password' => ['required', 'max:35'],
             'device_name' => ['required', 'string', 'max:200']
         ];
     }

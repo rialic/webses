@@ -198,7 +198,9 @@ return [
         'state' => 'Estado',
         'whatsapp' => 'Whatsapp',
         'establishment' => 'Unidade de Saúde',
-        'confirm_password' => 'Confirma senha'
+        'confirm_password' => 'Confirma senha',
+        'bireme_code' => 'Descritor bireme',
+        'room_link' => 'URL Sala Virtual'
     ],
 
 ];

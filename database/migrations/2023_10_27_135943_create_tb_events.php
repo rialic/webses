@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('ev_start_minutes_additions')->default(15);
             $table->timestamp('ev_end_at');
             $table->integer('ev_end_minutes_additions')->default(15);
-            $table->string('ev_virtual_room', 15);
             $table->string('ev_room_link', 500);
             $table->timestamps();
 

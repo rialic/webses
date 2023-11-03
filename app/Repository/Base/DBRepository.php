@@ -6,6 +6,7 @@ namespace App\Repository\Base;
 use App\Exceptions\FilterByMethodNotDefined;
 use App\Repository\RepositoryException\EntityNotDefined;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class DBRepository implements DBRepositoryInterface
@@ -124,12 +125,20 @@ class DBRepository implements DBRepositoryInterface
 
     public function getDataModels($data)
     {
-        foreach($data as $field => $value) {
+        foreach ($data as $field => $value) {
             $modelData = Str::contains($field, '_uuid');
+            $relationship = collect($this->model->getRelationships())->first(function ($key, $relationship) use ($field) {
+                if (is_string($relationship)) {
+                    return Str::snake($relationship) === $field;
+                }
 
-            if ($modelData) {
-                $field = substr($field, 0, stripos($field, '_'));
-                $model = app("\App\Models\\" . ucfirst($field));
+                Str::snake($key) === $field;
+            });
+
+
+            if ($modelData || $relationship) {
+                $field = ($modelData) ? substr($field, 0, stripos($field, '_')) : $field;
+                $model = app("\App\Models\\" . ucfirst(($modelData) ? $field : $relationship));
                 $model = $model::where("{$model->getTableColumnPrefix()}_uuid", $value)->first();
                 $data[$field] = $model;
             }

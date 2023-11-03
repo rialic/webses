@@ -44,9 +44,6 @@ class RolePermissionSeeder extends Seeder
             $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
 
-            $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT--VIEW', $tenant->name);
-            $this->createRolePermission($rolePermission, $tenant->id);
-
             $rolePermission = $this->hasRolePermission('USER', 'WEB.EVENT--CERTIFICATE', $tenant->name);
             $this->createRolePermission($rolePermission, $tenant->id);
         });

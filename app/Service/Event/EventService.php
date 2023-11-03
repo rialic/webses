@@ -2,15 +2,34 @@
 
 namespace App\Service\Event;
 
+use App\Http\Requests\Event\StoreEventRequest;
 use App\Repository\Interfaces\EventInterface as EventRepository;
 use App\Service\Base\ServiceResource;
-use Illuminate\Support\Facades\Log;
 
 class EventService extends ServiceResource
 {
+  public $storeInputs = [
+    'name',
+    'description',
+    'bireme_code',
+    'start_at',
+    'start_minutes_additions',
+    'end_at',
+    'end_minutes_additions',
+    'description',
+    'room_link',
+    'created_by'
+  ];
+
   public function __construct(EventRepository $repository)
   {
     $this->repository = $repository;
+    $this->updateInputs = $this->storeInputs;
+  }
+
+  public function validatorRequest()
+  {
+    return app(StoreEventRequest::class);
   }
 
   public function index()

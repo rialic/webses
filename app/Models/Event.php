@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\Global\GlobalObserver;
 use App\Traits\HasResourceModel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,15 @@ class Event extends Model
     protected $table = 'tb_events';
     protected $tableColumnPrefix = 'ev';
     protected $primaryKey = 'ev_id';
-    protected $relationships = ['tenants', 'user'];
+    protected $relationships = ['tenants', 'participants', 'createdBy' => 'user'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        // static::addGlobalScope(new TenantScope);
+        static::observe(new GlobalObserver);
+    }
 
     protected $appends = [
         'name',
@@ -26,22 +35,21 @@ class Event extends Model
         'end_at',
         'end_at_formatted',
         'end_minutes_additions',
-        'virtual_room',
         'description',
         'room_link'
     ];
 
     protected $fillable = [
         'ev_name',
+        'ev_description',
         'ev_status',
         'ev_bireme_code',
         'ev_start_at',
         'ev_start_minutes_additions',
         'ev_end_at',
         'ev_end_minutes_additions',
-        'ev_virtual_room',
         'ev_room_link',
-        'created_by',
+        'ev_created_by',
         'tenant_id'
     ];
 
@@ -64,7 +72,7 @@ class Event extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by', 'us_id');
     }
 
     public function participants()
